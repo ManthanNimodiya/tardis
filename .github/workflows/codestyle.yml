@@ -41,11 +41,25 @@ jobs:
 
       - name: Show statistics pull request
         if: github.event_name == 'pull_request_target'
-        run: ruff check --statistics  --show-fixes $(git --no-pager diff --name-only origin/master HEAD --) | tee ruff_stats.txt
+        run: |
+          changed_py_files="$(git --no-pager diff --name-only origin/master HEAD -- | grep -E '\.py$' || true)"
+
+          if [ -z "$changed_py_files" ]; then
+            echo "No Python files changed." | tee ruff_stats.txt
+          else
+            echo "$changed_py_files" | xargs ruff check --statistics --show-fixes | tee ruff_stats.txt
+          fi
       
       - name: Show entire output pull request
         if: github.event_name == 'pull_request_target'
-        run: ruff check --output-format=concise $(git --no-pager diff --name-only origin/master HEAD -- | grep -E '\.py$') | tee ruff_full.txt
+        run: |
+          changed_py_files="$(git --no-pager diff --name-only origin/master HEAD -- | grep -E '\.py$' || true)"
+
+          if [ -z "$changed_py_files" ]; then
+            echo "All checks passed!" | tee ruff_full.txt
+          else
+            echo "$changed_py_files" | xargs ruff check --output-format=concise | tee ruff_full.txt
+          fi
 
       - name: Show statistics push
         if: github.event_name == 'push'
