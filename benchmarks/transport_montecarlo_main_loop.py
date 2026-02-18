@@ -23,9 +23,6 @@ class BenchmarkTransportMontecarloMontecarloMainLoop(BenchmarkBase):
         self.geometry_state = self.transport_state.geometry_state
         self.time_explosion = self.verysimple_time_explosion
         self.opacity_state = self.transport_state.opacity_state
-        self.radfield_mc_estimators = (
-            self.transport_state.radfield_mc_estimators
-        )
 
     def time_montecarlo_transport(self):
         montecarlo_transport(
@@ -34,7 +31,6 @@ class BenchmarkTransportMontecarloMontecarloMainLoop(BenchmarkBase):
             self.time_explosion,
             self.opacity_state,
             self.montecarlo_configuration,
-            self.radfield_mc_estimators,
             self.nb_simulation_verysimple.transport.spectrum_frequency_grid.value,
             self.rpacket_tracker_list,
             self.montecarlo_configuration.NUMBER_OF_VPACKETS,

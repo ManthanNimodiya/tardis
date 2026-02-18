@@ -236,32 +236,15 @@ class BenchmarkBase:
 
     @functools.cached_property
     def estimators_bulk(self):
-        return init_estimators_bulk(
-            mean_intensity_total=np.array([0.0, 0.0], dtype=np.float64),
-            mean_frequency=np.array([0.0, 0.0], dtype=np.float64),
-        )
+        return init_estimators_bulk(2)  # 2 cells in benchmark geometry
 
     @functools.cached_property
     def estimators_line(self):
-        return init_estimators_line(
-            mean_intensity_blue=np.array(
-                [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]], dtype=np.float64
-            ),
-            energy_deposition_line=np.array(
-                [[0.0, 0.0, 1.0], [0.0, 0.0, 1.0]], dtype=np.float64
-            ),
-        )
+        return init_estimators_line((3, 2))  # (n_lines=3, n_cells=2)
 
     @functools.cached_property
     def estimators_continuum(self):
-        return init_estimators_continuum(
-            photo_ion_estimator=np.empty((0, 0), dtype=np.float64),
-            stim_recomb_estimator=np.empty((0, 0), dtype=np.float64),
-            bf_heating_estimator=np.empty((0, 0), dtype=np.float64),
-            stim_recomb_cooling_estimator=np.empty((0, 0), dtype=np.float64),
-            ff_heating_estimator=np.empty((0, 0), dtype=np.float64),
-            photo_ion_estimator_statistics=np.empty((0, 0), dtype=np.int64),
-        )
+        return init_estimators_continuum((0, 2), 2)  # (0 bf species, 2 cells)
 
     @functools.cached_property
     def rpacket_tracker_list(self):

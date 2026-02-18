@@ -4,10 +4,22 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'tardis/**'
+      - 'benchmarks/**'
+      - 'setup.cfg'
+      - 'setup.py'
+      - 'pyproject.toml'
 
   pull_request_target:
     branches:
       - master
+    paths:
+      - 'tardis/**'
+      - 'benchmarks/**'
+      - 'setup.cfg'
+      - 'setup.py'
+      - 'pyproject.toml'
 
     types:
       - opened
